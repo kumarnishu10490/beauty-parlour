@@ -79,8 +79,8 @@ const ScrollTransformationStory = () => {
         </div>
       </div>
 
-      {/* Interactive Scroll Stages - All Devices */}
-      <div className="min-h-[400vh] relative px-6 md:px-12 lg:px-20 py-16">
+      {/* Interactive Scroll Stages - Desktop/Tablet */}
+      <div className="hidden md:block min-h-[400vh] relative px-6 md:px-12 lg:px-20 py-16">
         <div className="sticky top-32 max-w-7xl mx-auto">
           <div className="relative min-h-[70vh] flex items-center">
             {stages.map((stage, i) =>
@@ -118,6 +118,39 @@ const ScrollTransformationStory = () => {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Simple Vertical List - Mobile */}
+      <div className="md:hidden px-6 py-10 space-y-16">
+        {stages.map((stage, i) => (
+          <AnimatedSection key={stage.step} delay={i * 0.1}>
+            <div className="flex flex-col gap-6">
+              <div className="rounded-3xl overflow-hidden shadow-xl relative group">
+                <img
+                  src={stage.img}
+                  alt={stage.title}
+                  className="w-full h-64 object-cover"
+                  loading="lazy"
+                  decoding="async" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              </div>
+              <div>
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-4xl font-heading font-bold text-gradient-gold opacity-40">
+                    {stage.step}
+                  </span>
+                  <div className="h-px flex-1 bg-border" />
+                </div>
+                <h3 className="font-heading text-2xl font-bold text-foreground mb-2">
+                  {stage.title}
+                </h3>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  {stage.description}
+                </p>
+              </div>
+            </div>
+          </AnimatedSection>
+        ))}
       </div>
     </section>);
 };
