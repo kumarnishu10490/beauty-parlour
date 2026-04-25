@@ -123,7 +123,3 @@ const ScrollTransformationStory = () => {
 };
 
 export default ScrollTransformationStory;
-
-};
-
-export default ScrollTransformationStory;
