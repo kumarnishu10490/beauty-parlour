@@ -8,7 +8,7 @@ import AnimatedSection from "@/components/AnimatedSection";
 import { Clock, Users, Award, CheckCircle2, Loader2 } from "lucide-react";
 import trainingImg from "@/assets/training-class.jpg";
 import { db } from "@/lib/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
 
 
@@ -19,7 +19,8 @@ const CoursesPage = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "courses"));
+        const q = query(collection(db, "courses"), orderBy("createdAt", "asc"));
+        const querySnapshot = await getDocs(q);
         const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setCourses(data);
       } catch (e) {
