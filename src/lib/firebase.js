@@ -18,7 +18,16 @@ console.log("Firebase Config Status:", {
   projectId: firebaseConfig.projectId
 });
 
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+let app, auth, db, storage;
+
+try {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  storage = getStorage(app);
+} catch (error) {
+  console.error("Firebase Initialization Error:", error);
+}
+
+export { auth, db, storage };
+
