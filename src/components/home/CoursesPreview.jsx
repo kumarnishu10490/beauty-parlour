@@ -10,6 +10,8 @@ const courses = [
   duration: "3 Months",
   students: "50+ Enrolled",
   features: ["Skincare Basics", "Daily Makeup", "Hair Styling Fundamentals"],
+  price: "₹12,000",
+  originalPrice: "₹15,000",
   highlight: false
 },
 {
@@ -17,6 +19,8 @@ const courses = [
   duration: "6 Months",
   students: "30+ Enrolled",
   features: ["HD Makeup", "Airbrush Techniques", "Fashion Makeup", "Portfolio Building"],
+  price: "₹16,000",
+  originalPrice: "₹18,000",
   highlight: true
 },
 {
@@ -24,6 +28,8 @@ const courses = [
   duration: "4 Months",
   students: "40+ Enrolled",
   features: ["Bridal Looks", "Draping & Styling", "Client Handling", "Business Skills"],
+  price: "₹23,000",
+  originalPrice: "₹25,000",
   highlight: false
 }];
 
@@ -93,12 +99,21 @@ const CoursesPreview = () => {
                     </span>
                   </div>
 
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mb-6">
                     {course.features.map((f) =>
                   <span key={f} className="px-3 py-1.5 text-[10px] font-bold rounded-lg bg-primary/10 text-primary border border-primary/10 uppercase tracking-tighter">
                         {f}
                       </span>
                   )}
+                  </div>
+
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="text-2xl font-heading font-bold text-gradient-gold">
+                      {course.price}
+                    </div>
+                    <div className="text-sm text-muted-foreground line-through opacity-50">
+                      {course.originalPrice}
+                    </div>
                   </div>
 
                   {/* Shine effect on hover */}

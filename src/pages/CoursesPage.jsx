@@ -97,7 +97,16 @@ const CoursesPage = () => {
                       )}
                       </div>
 
-                      <div className="text-2xl font-heading font-bold text-gradient-gold mb-4">{course.price}</div>
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="text-2xl font-heading font-bold text-gradient-gold">
+                          {course.price}
+                        </div>
+                        {course.originalPrice && (
+                          <div className="text-sm text-muted-foreground line-through opacity-50">
+                            {course.originalPrice}
+                          </div>
+                        )}
+                      </div>
                       <Link to="/contact" className="btn-luxury text-center">
                         Enroll Now
                       </Link>
