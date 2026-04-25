@@ -82,7 +82,7 @@ const ScrollTransformationStory = () => {
       </div>
 
       {/* Desktop/Tablet View: Interactive Scroll Stages */}
-      <div className="hidden md:block min-h-[150vh] relative px-6 md:px-12 lg:px-20 py-16">
+      <div className="hidden md:block min-h-[100vh] relative px-6 md:px-12 lg:px-20 py-16">
         <div className="sticky top-32 max-w-7xl mx-auto">
           <div className="relative min-h-[70vh] flex items-center">
             {stages.map((stage, i) =>
