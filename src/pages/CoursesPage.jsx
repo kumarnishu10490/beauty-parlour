@@ -98,7 +98,7 @@ const CoursesPage = () => {
                       )}
                       </div>
 
-                      <div className="flex items-center gap-3 mb-4">
+                      <div className="flex items-center gap-3 mb-6">
                         <div className="text-2xl font-heading font-bold text-gradient-gold">
                           {course.price}
                         </div>
@@ -108,9 +108,14 @@ const CoursesPage = () => {
                           </div>
                         )}
                       </div>
-                      <Link to="/contact" className="btn-luxury text-center">
+                      <a 
+                        href={`https://wa.me/919304825053?text=${encodeURIComponent(`Hi! I'm interested in enrolling for the "${course.title}". Please provide more details.`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-luxury text-center block"
+                      >
                         Enroll Now
-                      </Link>
+                      </a>
                     </motion.div>
                   </AnimatedSection>
                 )

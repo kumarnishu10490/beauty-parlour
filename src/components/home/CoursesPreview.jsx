@@ -71,7 +71,12 @@ const CoursesPreview = () => {
           <div className="space-y-6">
             {courses.map((course, i) =>
             <AnimatedSection key={course.title} delay={0.2 + (i * 0.2)} direction="right">
-                <Link to="/courses" className="block">
+                <a 
+                  href={`https://wa.me/919304825053?text=${encodeURIComponent(`Hi! I'm interested in enrolling for the "${course.title}". Please provide more details.`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
                   <motion.div
                   whileHover={{ x: 12, y: -4 }}
                   className={`relative group glass-card-hover rounded-[2rem] p-8 border border-white/20 transition-all duration-500 ${
@@ -118,13 +123,13 @@ const CoursesPreview = () => {
                     </div>
 
                     <div className="flex items-center gap-2 text-xs font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      View Details <ArrowRight className="w-3 h-3" />
+                      Enroll on WhatsApp <ArrowRight className="w-3 h-3" />
                     </div>
 
                     {/* Shine effect on hover */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                   </motion.div>
-                </Link>
+                </a>
               </AnimatedSection>
             )}
             
