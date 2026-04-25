@@ -35,7 +35,7 @@ const ServicesPreview = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, i) =>
             <AnimatedSection key={service.title} delay={i * 0.1}>
-              <Link to="/services">
+              <Link to="/services" className="block h-full">
                 <motion.div
                   whileHover={{ y: -8, scale: 1.02 }}
                   transition={{ duration: 0.3 }}
