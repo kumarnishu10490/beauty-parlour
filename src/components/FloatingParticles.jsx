@@ -1,10 +1,23 @@
 import { motion } from "framer-motion";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 const FloatingParticles = ({ count = 20 }) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const actualCount = isMobile ? Math.floor(count / 2) : count;
+
   const particles = useMemo(
     () =>
-    Array.from({ length: count }, (_, i) => ({
+    Array.from({ length: actualCount }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -12,7 +25,7 @@ const FloatingParticles = ({ count = 20 }) => {
       duration: Math.random() * 10 + 10,
       delay: Math.random() * 5
     })),
-    [count]
+    [actualCount]
   );
 
   return (
@@ -25,7 +38,8 @@ const FloatingParticles = ({ count = 20 }) => {
           left: `${p.x}%`,
           top: `${p.y}%`,
           width: p.size,
-          height: p.size
+          height: p.size,
+          willChange: "transform, opacity"
         }}
         animate={{
           y: [-20, 20, -20],

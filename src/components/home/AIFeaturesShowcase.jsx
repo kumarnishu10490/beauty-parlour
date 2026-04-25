@@ -59,9 +59,10 @@ const AIFeaturesShowcase = () => {
           <AnimatedSection key={feature.title} delay={i * 0.1}>
               <Link to={feature.path}>
                 <motion.div
-                whileHover={{ y: -10, scale: 1.02 }}
+                whileHover={{ y: -5, scale: 1.01 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="glass-card rounded-3xl p-6 h-full cursor-pointer group relative overflow-hidden">
+                className="glass-card rounded-3xl p-6 h-full cursor-pointer group relative overflow-hidden"
+                style={{ willChange: "transform" }}>
                 
                   {/* Glow effect on hover */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 to-gold/5 rounded-3xl" />

@@ -17,12 +17,13 @@ const HeroSection = () => {
       <FloatingParticles count={30} />
       
       {/* Background image with parallax */}
-      <motion.div className="absolute inset-0" style={{ y: bgY }}>
+      <motion.div className="absolute inset-0" style={{ y: bgY, willChange: "transform" }}>
         <img
           src={heroImg}
           alt="Sakshi Beauty Parlour luxury interior"
           className="w-full h-full object-cover opacity-20 scale-110"
-          loading="eager" />
+          loading="eager"
+          decoding="async" />
         
         <div className="absolute inset-0 bg-gradient-to-r from-cream/90 via-cream/70 to-transparent" />
       </motion.div>
@@ -33,7 +34,8 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blush/50 text-primary text-sm font-medium mb-6">
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blush/50 text-primary text-sm font-medium mb-6"
+            style={{ willChange: "transform, opacity" }}>
             
             ✨ Sakshi Beauty Parlour & Training Centre
           </motion.div>
@@ -42,7 +44,8 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="heading-display mb-6">
+            className="heading-display mb-6"
+            style={{ willChange: "transform, opacity" }}>
             
             Beauty is an Art.
             <br />
@@ -55,7 +58,8 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg text-muted-foreground max-w-lg mb-8 leading-relaxed">
+            className="text-lg text-muted-foreground max-w-lg mb-8 leading-relaxed"
+            style={{ willChange: "transform, opacity" }}>
             
             Transform your passion into profession. Sakshi Beauty Parlour & Training Centre offers
             premium beauty services and professional training courses.
@@ -65,7 +69,8 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-wrap gap-4">
+            className="flex flex-wrap gap-4"
+            style={{ willChange: "transform, opacity" }}>
             
             <Link to="/services" className="btn-luxury">
               Explore Services
@@ -79,7 +84,8 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
-            className="flex gap-8 mt-12">
+            className="flex gap-8 mt-12"
+            style={{ willChange: "opacity" }}>
             
             {[
             { num: "500+", label: "Happy Clients" },
@@ -98,13 +104,15 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.9, x: 50 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="hidden lg:block relative">
+          className="hidden lg:block relative"
+          style={{ willChange: "transform, opacity" }}>
           
           <div className="relative h-[500px] rounded-3xl overflow-hidden shadow-elegant">
             <img
               src={heroImg}
               alt="Sakshi Beauty Parlour interior"
-              className="w-full h-full object-cover transition-transform duration-700 ease-out hover:scale-110" />
+              className="w-full h-full object-cover transition-transform duration-700 ease-out hover:scale-110"
+              decoding="async" />
             
             <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-blush/20" />
             <div className="absolute bottom-6 left-6 right-6 backdrop-blur-md bg-white/20 rounded-2xl p-5 border border-white/30">

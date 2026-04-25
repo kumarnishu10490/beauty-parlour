@@ -81,14 +81,14 @@ const ScrollTransformationStory = () => {
         </div>
       </div>
 
-      {/* Stages */}
+    {/* Stages */}
       <div className="min-h-[400vh] relative px-6 md:px-12 lg:px-20 py-16">
         <div className="sticky top-32 max-w-7xl mx-auto">
           <div className="relative min-h-[70vh] flex items-center">
             {stages.map((stage, i) =>
             <motion.div
               key={stage.step}
-              style={{ opacity: opacities[i], scale: scales[i], y: ys[i] }}
+              style={{ opacity: opacities[i], scale: scales[i], y: ys[i], willChange: "transform, opacity" }}
               className="absolute inset-0 flex items-center">
               
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
@@ -111,7 +111,8 @@ const ScrollTransformationStory = () => {
                     src={stage.img}
                     alt={stage.title}
                     className="w-full h-80 md:h-96 object-cover"
-                    loading="lazy" />
+                    loading="lazy"
+                    decoding="async" />
                   
                   </div>
                 </div>

@@ -55,6 +55,7 @@ const SocialProofPopup = () => {
           exit={{ opacity: 0, y: 30, scale: 0.9 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}
           className="glass-card rounded-2xl p-4 shadow-lg cursor-pointer"
+          style={{ willChange: "transform, opacity" }}
           onClick={() => setVisible(false)}>
           
             <div className="flex items-start gap-3">

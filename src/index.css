@@ -83,9 +83,11 @@
 @layer components {
   .glass-card {
     background: hsl(var(--glass-bg));
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid hsl(var(--glass-border));
     box-shadow: var(--shadow-card);
+    will-change: transform;
   }
 
   .glass-card-hover {

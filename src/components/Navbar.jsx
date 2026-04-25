@@ -32,7 +32,8 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-border/30">
+      className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-border/30"
+      style={{ willChange: "transform" }}>
       
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-1.5 sm:gap-2 group">
