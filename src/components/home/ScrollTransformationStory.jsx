@@ -75,14 +75,12 @@ const ScrollTransformationStory = () => {
           <motion.div
             style={{ width: progressWidth }}
             className="h-full rounded-full"
-            // Using inline style for gradient since this is a dynamic element
             {...{ style: { width: progressWidth, background: "linear-gradient(90deg, hsl(340 60% 55%), hsl(38 70% 55%))" } }} />
-
         </div>
       </div>
 
-      {/* Desktop/Tablet View: Interactive Scroll Stages */}
-      <div className="hidden md:block min-h-[100vh] relative px-6 md:px-12 lg:px-20 py-16">
+      {/* Interactive Scroll Stages - All Devices */}
+      <div className="min-h-[400vh] relative px-6 md:px-12 lg:px-20 py-16">
         <div className="sticky top-32 max-w-7xl mx-auto">
           <div className="relative min-h-[70vh] flex items-center">
             {stages.map((stage, i) =>
@@ -91,28 +89,29 @@ const ScrollTransformationStory = () => {
                 style={{ opacity: opacities[i], scale: scales[i], y: ys[i], willChange: "transform, opacity" }}
                 className="absolute inset-0 flex items-center">
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
-                  <div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full">
+                  <div className="order-2 lg:order-1">
                     <div className="flex items-center gap-4 mb-4">
-                      <span className="text-6xl font-heading font-bold text-gradient-gold opacity-30">
+                      <span className="text-4xl lg:text-6xl font-heading font-bold text-gradient-gold opacity-30">
                         {stage.step}
                       </span>
                       <div className="h-px flex-1 bg-border" />
                     </div>
-                    <h3 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+                    <h3 className="font-heading text-2xl lg:text-4xl font-bold text-foreground mb-4">
                       {stage.title}
                     </h3>
-                    <p className="text-lg text-muted-foreground leading-relaxed max-w-md">
+                    <p className="text-base lg:text-lg text-muted-foreground leading-relaxed max-w-md">
                       {stage.description}
                     </p>
                   </div>
-                  <div className="rounded-3xl overflow-hidden shadow-2xl">
+                  <div className="order-1 lg:order-2 rounded-3xl overflow-hidden shadow-2xl relative group">
                     <img
                       src={stage.img}
                       alt={stage.title}
-                      className="w-full h-80 md:h-96 object-cover"
+                      className="w-full h-64 sm:h-80 lg:h-96 object-cover transition-transform duration-700 group-hover:scale-110"
                       loading="lazy"
                       decoding="async" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
                 </div>
               </motion.div>
@@ -120,39 +119,10 @@ const ScrollTransformationStory = () => {
           </div>
         </div>
       </div>
-
-      {/* Mobile View: Simple Vertical List */}
-      <div className="md:hidden px-6 py-10 space-y-16">
-        {stages.map((stage, i) => (
-          <AnimatedSection key={stage.step} delay={i * 0.1}>
-            <div className="flex flex-col gap-6">
-              <div className="rounded-3xl overflow-hidden shadow-xl">
-                <img
-                  src={stage.img}
-                  alt={stage.title}
-                  className="w-full h-64 object-cover"
-                  loading="lazy"
-                  decoding="async" />
-              </div>
-              <div>
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-4xl font-heading font-bold text-gradient-gold opacity-40">
-                    {stage.step}
-                  </span>
-                  <div className="h-px flex-1 bg-border" />
-                </div>
-                <h3 className="font-heading text-2xl font-bold text-foreground mb-2">
-                  {stage.title}
-                </h3>
-                <p className="text-base text-muted-foreground leading-relaxed">
-                  {stage.description}
-                </p>
-              </div>
-            </div>
-          </AnimatedSection>
-        ))}
-      </div>
     </section>);
+};
+
+export default ScrollTransformationStory;
 
 };
 
