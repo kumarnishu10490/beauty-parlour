@@ -3,12 +3,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Star } from "lucide-react";
 
 const proofs = [
-{ name: "Priya S.", service: "Bridal Makeup", rating: 5, time: "2 min ago", location: "Delhi" },
-{ name: "Neha R.", service: "Hair Smoothening", rating: 5, time: "5 min ago", location: "Noida" },
-{ name: "Anita M.", service: "Gold Facial", rating: 4, time: "8 min ago", location: "Gurgaon" },
-{ name: "Kavita J.", service: "Beauty Course", rating: 5, time: "12 min ago", location: "Delhi" },
-{ name: "Ritu P.", service: "Party Makeup", rating: 5, time: "15 min ago", location: "Faridabad" },
-{ name: "Sunita D.", service: "Mehndi", rating: 5, time: "20 min ago", location: "Noida" }];
+  { name: "Sakshi Y.", service: "Bridal Makeup", rating: 5, time: "2 min ago", location: "Dipka" },
+  { name: "Anjali K.", service: "Hair Smoothening", rating: 5, time: "5 min ago", location: "Korba" },
+  { name: "Neha R.", service: "Gold Facial", rating: 4, time: "8 min ago", location: "Gevra" },
+  { name: "Pooja S.", service: "Beauty Course", rating: 5, time: "12 min ago", location: "Dipka" },
+  { name: "Ritu P.", service: "Party Makeup", rating: 5, time: "15 min ago", location: "Pali" },
+  { name: "Kiran D.", service: "Mehndi Design", rating: 5, time: "20 min ago", location: "Korba" }
+];
 
 
 const SocialProofPopup = () => {
