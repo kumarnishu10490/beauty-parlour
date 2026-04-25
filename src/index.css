@@ -55,6 +55,7 @@
     --shadow-luxury: 0 20px 60px -15px hsl(340 60% 55% / 0.15);
     --shadow-card: 0 8px 30px -10px hsl(340 30% 40% / 0.1);
     --shadow-glow: 0 0 40px hsl(340 60% 55% / 0.2);
+    --shadow-glow-sm: 0 0 15px hsl(38 70% 55% / 0.25);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -160,6 +161,10 @@
     border-radius: 50%;
     pointer-events: none;
     background: radial-gradient(circle, hsl(var(--gold) / 0.6), hsl(var(--rose-gold) / 0.3));
+  }
+
+  .shadow-glow-sm {
+    box-shadow: var(--shadow-glow-sm);
   }
 }
 
