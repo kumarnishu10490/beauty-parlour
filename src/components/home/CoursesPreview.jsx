@@ -71,54 +71,60 @@ const CoursesPreview = () => {
           <div className="space-y-6">
             {courses.map((course, i) =>
             <AnimatedSection key={course.title} delay={0.2 + (i * 0.2)} direction="right">
-                <motion.div
-                whileHover={{ x: 12, y: -4 }}
-                className={`relative group glass-card-hover rounded-[2rem] p-8 border border-white/20 transition-all duration-500 ${
-                course.highlight ? "bg-white/40 shadow-glow-sm" : "bg-white/20"}`
-                }>
-                  
-                  {/* Step indicator */}
-                  <div className="absolute -left-3 -top-3 w-10 h-10 rounded-xl bg-foreground text-primary flex items-center justify-center font-heading font-bold shadow-lg">
-                    0{i+1}
-                  </div>
+                <Link to="/courses" className="block">
+                  <motion.div
+                  whileHover={{ x: 12, y: -4 }}
+                  className={`relative group glass-card-hover rounded-[2rem] p-8 border border-white/20 transition-all duration-500 ${
+                  course.highlight ? "bg-white/40 shadow-glow-sm" : "bg-white/20"}`
+                  }>
+                    
+                    {/* Step indicator */}
+                    <div className="absolute -left-3 -top-3 w-10 h-10 rounded-xl bg-foreground text-primary flex items-center justify-center font-heading font-bold shadow-lg">
+                      0{i+1}
+                    </div>
 
-                  {course.highlight &&
-                <span className="absolute top-6 right-8 px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-primary text-primary-foreground">
-                      Best Choice
-                    </span>
-                }
-                  
-                  <h3 className="font-heading text-2xl font-bold text-foreground mb-3">{course.title}</h3>
-                  
-                  <div className="flex gap-4 mb-5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    <span className="flex items-center gap-1.5 bg-white/50 px-3 py-1.5 rounded-lg border border-white/30">
-                      <Clock className="w-3.5 h-3.5 text-primary" /> {course.duration}
-                    </span>
-                    <span className="flex items-center gap-1.5 bg-white/50 px-3 py-1.5 rounded-lg border border-white/30">
-                      <Users className="w-3.5 h-3.5 text-gold" /> {course.students}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {course.features.map((f) =>
-                  <span key={f} className="px-3 py-1.5 text-[10px] font-bold rounded-lg bg-primary/10 text-primary border border-primary/10 uppercase tracking-tighter">
-                        {f}
+                    {course.highlight &&
+                  <span className="absolute top-6 right-8 px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full bg-primary text-primary-foreground">
+                        Best Choice
                       </span>
-                  )}
-                  </div>
-
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="text-2xl font-heading font-bold text-gradient-gold">
-                      {course.price}
+                  }
+                    
+                    <h3 className="font-heading text-2xl font-bold text-foreground mb-3">{course.title}</h3>
+                    
+                    <div className="flex gap-4 mb-5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      <span className="flex items-center gap-1.5 bg-white/50 px-3 py-1.5 rounded-lg border border-white/30">
+                        <Clock className="w-3.5 h-3.5 text-primary" /> {course.duration}
+                      </span>
+                      <span className="flex items-center gap-1.5 bg-white/50 px-3 py-1.5 rounded-lg border border-white/30">
+                        <Users className="w-3.5 h-3.5 text-gold" /> {course.students}
+                      </span>
                     </div>
-                    <div className="text-sm text-muted-foreground line-through opacity-50">
-                      {course.originalPrice}
-                    </div>
-                  </div>
 
-                  {/* Shine effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                </motion.div>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {course.features.map((f) =>
+                    <span key={f} className="px-3 py-1.5 text-[10px] font-bold rounded-lg bg-primary/10 text-primary border border-primary/10 uppercase tracking-tighter">
+                          {f}
+                        </span>
+                    )}
+                    </div>
+
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="text-2xl font-heading font-bold text-gradient-gold">
+                        {course.price}
+                      </div>
+                      <div className="text-sm text-muted-foreground line-through opacity-50">
+                        {course.originalPrice}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-xs font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      View Details <ArrowRight className="w-3 h-3" />
+                    </div>
+
+                    {/* Shine effect on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                  </motion.div>
+                </Link>
               </AnimatedSection>
             )}
             
