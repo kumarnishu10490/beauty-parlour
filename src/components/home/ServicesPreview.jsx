@@ -37,7 +37,7 @@ const ServicesPreview = () => {
           {services.map((service, i) =>
             <AnimatedSection key={service.title} delay={i * 0.1}>
               <motion.div
-                onClick={() => navigate('/services')}
+                onClick={() => navigate(`/contact?service=${encodeURIComponent(service.title)}`)}
                 whileHover={{ y: -8, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.3 }}
