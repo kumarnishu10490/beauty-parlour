@@ -1,8 +1,21 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { auth } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
 
 export default function AdminLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
   const path = location.pathname;
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      navigate("/");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex font-body">
@@ -22,9 +35,9 @@ export default function AdminLayout() {
           <Link to="/admin/contact" className={`px-4 py-3 rounded-xl transition-all ${path === '/admin/contact' ? 'bg-primary/20 text-primary font-medium' : 'hover:bg-gray-800 text-gray-300 hover:text-white'}`}>Messages</Link>
           
           <div className="mt-auto pt-10 border-t border-gray-800">
-            <Link to="/admin" className="flex items-center justify-center gap-2 w-full text-center hover:bg-red-500 bg-red-500/10 text-red-500 hover:text-white py-3 rounded-xl transition-colors font-medium">
+            <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full text-center hover:bg-red-500 bg-red-500/10 text-red-500 hover:text-white py-3 rounded-xl transition-colors font-medium cursor-pointer">
               Logout
-            </Link>
+            </button>
           </div>
         </nav>
       </div>
