@@ -45,7 +45,7 @@ const ServicesPreview = () => {
             <Icons.Loader2 className="w-8 h-8 text-primary animate-spin" />
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 relative z-10">
             {services.map((service, i) => {
               const IconComponent = Icons[service.icon] || Icons.Sparkles;
               return (
@@ -76,11 +76,11 @@ const ServicesPreview = () => {
                       </div>
                     </div>
                     
-                    <div className="p-6 pointer-events-none flex flex-col flex-1">
-                      <div className="flex justify-between items-start mb-2 gap-2">
+                    <div className="p-5 sm:p-6 pointer-events-none flex flex-col flex-1">
+                      <div className="flex flex-col xl:flex-row xl:justify-between xl:items-start mb-3 gap-2">
                         <h3 className="font-heading text-xl font-semibold text-foreground leading-tight">{service.title}</h3>
                         {service.price && (
-                          <span className="text-sm font-bold text-gradient-gold whitespace-nowrap bg-gold/10 px-2 py-1 rounded-md">{service.price}</span>
+                          <span className="text-sm font-bold text-gradient-gold whitespace-nowrap bg-gold/10 px-2 py-1 rounded-md self-start">{service.price}</span>
                         )}
                       </div>
                       <div className="text-sm text-muted-foreground line-clamp-2 quill-content flex-1" dangerouslySetInnerHTML={{ __html: service.desc }}></div>
