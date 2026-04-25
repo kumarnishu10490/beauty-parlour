@@ -18,7 +18,7 @@ export default function AdminLogin() {
     
     setTimeout(() => {
       if (username === "sakshibeauty@gmail.com" && password === "sakshi@2005") {
-        navigate("/admin/dashboard");
+        navigate("/admin/dashboard", { replace: true });
       } else {
         setError("Invalid credentials. Please try again.");
         setIsLoading(false);
