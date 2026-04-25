@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, addDoc, deleteDoc, doc, query, orderBy } from "firebase/firestore";
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { Edit2, Trash2, X } from "lucide-react";
 
 export default function AdminCourses() {
   const [courses, setCourses] = useState([]);
@@ -16,6 +17,7 @@ export default function AdminCourses() {
   const [description, setDescription] = useState("");
   const [modules, setModules] = useState("");
   const [popular, setPopular] = useState(false);
+  const [editingId, setEditingId] = useState(null);
 
   // FETCH DATA
   const fetchCourses = async () => {
@@ -37,15 +39,39 @@ export default function AdminCourses() {
     fetchCourses();
   }, []);
 
-  // ADD
-  const addCourse = async () => {
+  const resetForm = () => {
+    setTitle("");
+    setDuration("");
+    setStudents("");
+    setPrice("");
+    setOriginalPrice("");
+    setDescription("");
+    setModules("");
+    setPopular(false);
+    setEditingId(null);
+  };
+
+  const handleEdit = (course) => {
+    setTitle(course.title);
+    setDuration(course.duration || "");
+    setStudents(course.students || "");
+    setPrice(course.price || "");
+    setOriginalPrice(course.originalPrice || "");
+    setDescription(course.description || "");
+    setModules(course.modules ? course.modules.join(", ") : "");
+    setPopular(course.popular || false);
+    setEditingId(course.id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const saveCourse = async () => {
     if (!title || !price || !description) return;
     
     // Convert comma-separated string to array
     const modulesArray = modules.split(",").map(m => m.trim()).filter(m => m);
 
     try {
-        await addDoc(collection(db, "courses"), { 
+        const courseData = { 
             title, 
             duration, 
             students, 
@@ -53,20 +79,22 @@ export default function AdminCourses() {
             originalPrice,
             description, 
             modules: modulesArray,
-            popular,
-            createdAt: new Date().toISOString()
-        });
+            popular
+        };
+
+        if (editingId) {
+            await updateDoc(doc(db, "courses", editingId), courseData);
+        } else {
+            await addDoc(collection(db, "courses"), {
+                ...courseData,
+                createdAt: new Date().toISOString()
+            });
+        }
+        
         fetchCourses();
-        setTitle("");
-        setDuration("");
-        setStudents("");
-        setPrice("");
-        setOriginalPrice("");
-        setDescription("");
-        setModules("");
-        setPopular(false);
+        resetForm();
     } catch (e) {
-        console.error("Error adding course", e);
+        console.error("Error saving course", e);
     }
   };
 
@@ -86,9 +114,14 @@ export default function AdminCourses() {
     <div className="p-8">
       <h2 className="text-2xl font-bold mb-4">Manage Courses</h2>
 
-      {/* Add Form */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Form */}
+      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8 space-y-4 relative">
+          {editingId && (
+            <div className="absolute top-4 right-4 bg-yellow-100 text-yellow-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 z-10">
+              <Edit2 className="w-3 h-3" /> Editing Mode
+            </div>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
             <input className="border p-2 rounded focus:ring-2 outline-none" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Course Title (e.g. Basic Beauty)" />
             <input className="border p-2 rounded focus:ring-2 outline-none" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="Duration (e.g. 3 Months)" />
             <input className="border p-2 rounded focus:ring-2 outline-none" value={students} onChange={(e) => setStudents(e.target.value)} placeholder="Students (e.g. 50+ Enrolled)" />
@@ -103,7 +136,23 @@ export default function AdminCourses() {
             <ReactQuill theme="snow" value={description} onChange={setDescription} className="h-full" placeholder="Course Description..." />
           </div>
           <textarea className="border p-2 rounded w-full focus:ring-2 outline-none h-20" value={modules} onChange={(e) => setModules(e.target.value)} placeholder="Modules (comma separated, e.g. Skincare Basics, Hair Styling, Makeup)"></textarea>
-          <button className="bg-black text-white px-6 py-2 rounded" onClick={addCourse}>Add Course</button>
+          
+          <div className="flex justify-end gap-3 pt-2">
+            {editingId && (
+              <button 
+                onClick={resetForm}
+                className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
+              >
+                <X className="w-4 h-4" /> Cancel
+              </button>
+            )}
+            <button 
+                className="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-2" 
+                onClick={saveCourse}
+            >
+                <Edit2 className="w-4 h-4" /> {editingId ? "Update Course" : "Add Course"}
+            </button>
+          </div>
       </div>
 
       {/* List */}
@@ -129,8 +178,19 @@ export default function AdminCourses() {
                   </ul>
               </div>
 
-              <div className="mt-auto pt-3 border-t">
-                <button className="text-red-500 hover:text-red-700 text-sm font-medium" onClick={() => deleteCourse(item.id)}>Delete Course</button>
+              <div className="mt-auto pt-4 border-t flex justify-end gap-3">
+                <button 
+                  className="text-blue-500 hover:text-blue-700 text-sm font-medium flex items-center gap-1" 
+                  onClick={() => handleEdit(item)}
+                >
+                  <Edit2 className="w-4 h-4" /> Edit
+                </button>
+                <button 
+                  className="text-red-500 hover:text-red-700 text-sm font-medium flex items-center gap-1" 
+                  onClick={() => deleteCourse(item.id)}
+                >
+                  <Trash2 className="w-4 h-4" /> Delete
+                </button>
               </div>
             </div>
           )}

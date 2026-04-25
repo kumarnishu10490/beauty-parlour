@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { Loader2, UploadCloud } from "lucide-react";
+import { Loader2, UploadCloud, Edit2, Trash2, X } from "lucide-react";
 
 export default function AdminServices() {
   const [services, setServices] = useState([]);
@@ -13,9 +13,9 @@ export default function AdminServices() {
   const [file, setFile] = useState(null);
   const [icon, setIcon] = useState("Sparkles");
   const [uploading, setUploading] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [editingId, setEditingId] = useState(null);
+  const [currentImg, setCurrentImg] = useState("");
 
-  // FETCH DATA
   const fetchServices = async () => {
     try {
         const querySnapshot = await getDocs(collection(db, "services"));
@@ -30,25 +30,45 @@ export default function AdminServices() {
     fetchServices();
   }, []);
 
-  // ADD
-  const addService = async () => {
+  const resetForm = () => {
+    setTitle("");
+    setPrice("");
+    setDesc("");
+    setFile(null);
+    setIcon("Sparkles");
+    setEditingId(null);
+    setCurrentImg("");
+  };
+
+  const handleEdit = (service) => {
+    setTitle(service.title);
+    setPrice(service.price);
+    setDesc(service.desc);
+    setIcon(service.icon || "Sparkles");
+    setCurrentImg(service.img || "");
+    setEditingId(service.id);
+    setFile(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const saveService = async () => {
     if (!title || !price || !desc) return;
     
     setUploading(true);
 
     const saveToDb = async (imageUrl = "") => {
       try {
-        await addDoc(collection(db, "services"), { title, price, desc, img: imageUrl, icon });
+        const finalImg = imageUrl || currentImg;
+        if (editingId) {
+          await updateDoc(doc(db, "services", editingId), { title, price, desc, img: finalImg, icon });
+        } else {
+          await addDoc(collection(db, "services"), { title, price, desc, img: finalImg, icon, createdAt: new Date().toISOString() });
+        }
         fetchServices();
-        setTitle("");
-        setPrice("");
-        setDesc("");
-        setFile(null);
-        setIcon("Sparkles");
-        setProgress(0);
+        resetForm();
         setUploading(false);
       } catch (e) {
-        console.error("Error adding service", e);
+        console.error("Error saving service", e);
         setUploading(false);
       }
     };
@@ -87,8 +107,8 @@ export default function AdminServices() {
     }
   };
 
-  // DELETE
   const deleteService = async (id) => {
+    if(!window.confirm("Are you sure you want to delete this service?")) return;
     try {
         await deleteDoc(doc(db, "services", id));
         fetchServices();
@@ -101,9 +121,14 @@ export default function AdminServices() {
     <div className="p-8">
       <h2 className="text-2xl font-bold mb-4">Admin Services</h2>
 
-      {/* Add Form */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Form */}
+      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8 space-y-4 relative">
+          {editingId && (
+            <div className="absolute top-4 right-4 bg-yellow-100 text-yellow-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+              <Edit2 className="w-3 h-3" /> Editing Mode
+            </div>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
             <div className="space-y-4">
               <input className="w-full border p-2 rounded focus:ring-2 outline-none" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Service Title" />
               <input className="w-full border p-2 rounded focus:ring-2 outline-none" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Price (e.g. Starting ₹1,000)" />
@@ -124,7 +149,7 @@ export default function AdminServices() {
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
                 <UploadCloud className="w-8 h-8 text-gray-400 mb-2" />
-                <p className="text-sm text-gray-500 text-center">{file ? file.name : "Optional: Click or drag image for this service"}</p>
+                <p className="text-sm text-gray-500 text-center">{file ? file.name : (currentImg ? "Upload new image to replace existing" : "Click or drag image for this service")}</p>
               </div>
               {uploading && (
                 <div className="w-full bg-gray-200 rounded-full h-2.5">
@@ -141,14 +166,22 @@ export default function AdminServices() {
             </div>
           </div>
           
-          <div className="pt-4 border-t border-gray-100 flex justify-end">
+          <div className="pt-4 border-t border-gray-100 flex justify-end gap-3">
+            {editingId && (
+              <button 
+                onClick={resetForm}
+                className="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-2"
+              >
+                <X className="w-4 h-4" /> Cancel
+              </button>
+            )}
             <button 
               disabled={uploading || !title || !price || !desc}
               className="bg-black text-white px-8 py-2 rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 flex items-center justify-center gap-2" 
-              onClick={addService}
+              onClick={saveService}
             >
-              {uploading && <Loader2 className="w-4 h-4 animate-spin" />}
-              {uploading ? "Saving..." : "Add Service"}
+              {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : (editingId ? <Edit2 className="w-4 h-4" /> : <UploadCloud className="w-4 h-4" />)}
+              {uploading ? "Saving..." : (editingId ? "Update Service" : "Add Service")}
             </button>
           </div>
       </div>
@@ -161,11 +194,23 @@ export default function AdminServices() {
               <h3 className="font-bold text-lg">{item.title}</h3>
               <p className="text-primary font-medium my-1">{item.price}</p>
               <div className="text-sm text-gray-500 mb-4 line-clamp-3 quill-content" dangerouslySetInnerHTML={{ __html: item.desc }}></div>
-              <div className="mt-auto pt-2 border-t">
-                <button className="text-red-500 hover:text-red-700 text-sm font-medium" onClick={() => deleteService(item.id)}>Delete</button>
+              <div className="mt-auto pt-4 border-t flex justify-end gap-3">
+                <button 
+                  className="text-blue-500 hover:text-blue-700 text-sm font-medium flex items-center gap-1" 
+                  onClick={() => handleEdit(item)}
+                >
+                  <Edit2 className="w-4 h-4" /> Edit
+                </button>
+                <button 
+                  className="text-red-500 hover:text-red-700 text-sm font-medium flex items-center gap-1" 
+                  onClick={() => deleteService(item.id)}
+                >
+                  <Trash2 className="w-4 h-4" /> Delete
+                </button>
               </div>
             </div>
           )}
       </div>
-    </div>);
+    </div>
+  );
 }
