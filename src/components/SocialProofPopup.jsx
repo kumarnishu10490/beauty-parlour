@@ -3,11 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Star } from "lucide-react";
 
 const proofs = [
+const proofs = [
   { name: "Priya S.", service: "Bridal Makeup", rating: 5, time: "2 min ago", location: "Dipka" },
   { name: "Khushi R.", service: "Hair Smoothening", rating: 5, time: "5 min ago", location: "Korba" },
-  { name: "Puja K.", service: "Gold Facial", rating: 4, time: "8 min ago", location: "Dipka" },
-  { name: "Priya S.", service: "Party Makeup", rating: 5, time: "12 min ago", location: "Gevra" },
-  { name: "Khushi R.", service: "Beauty Course", rating: 5, time: "15 min ago", location: "Dipka" },
+  { name: "Puja K.", service: "Gold Facial", rating: 5, time: "8 min ago", location: "Gevra" },
+  { name: "Priya S.", service: "Party Makeup", rating: 4, time: "12 min ago", location: "Dipka" },
+  { name: "Khushi R.", service: "Beauty Course", rating: 5, time: "15 min ago", location: "Korba" },
   { name: "Puja K.", service: "Mehndi Design", rating: 5, time: "20 min ago", location: "Pali" }
 ];
 
