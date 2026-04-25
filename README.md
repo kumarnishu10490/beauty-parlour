@@ -2,14 +2,15 @@
 
 A modern, responsive web application for Sakshi Beauty Parlour & Training Centre, built with React, Vite, Tailwind CSS, and Firebase.
 
-## Features
+## ✨ Premium Features
 
-- **Service Management**: Browse and view detailed information about beauty services.
-- **Course Catalog**: Professional beauty training courses with enrollment options.
-- **Admin Panel**: Secure dashboard for managing appointments, services, courses, and gallery.
-- **Real-time Analytics**: Dashboard insights for the administrator.
-- **Gallery**: Visual showcase of bridal makeup, hairstyles, and more.
-- **Booking System**: Easy appointment booking for customers.
+- **🎓 Professional Training Centre**: Dedicated section for Basic, Advanced, and Bridal courses.
+- **📝 Bilingual Enrollment System**: Luxury form with Hindi & English WhatsApp integration.
+- **🏆 MSME Certified Trust**: Verified business badges to build client confidence.
+- **📱 Mobile-First Design**: Fully optimized for smartphones, tablets, and laptops.
+- **✨ Luxury Animations**: Smooth staggered entries and glassmorphism effects.
+- **📊 Real-time Admin**: Easy management of services, gallery, and courses.
+- **💬 Direct WhatsApp Booking**: One-click connection for appointments and training.
 
 ## Technologies Used
 
