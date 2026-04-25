@@ -94,7 +94,7 @@ const ServicesPage = () => {
                         </div>
                         <div className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-3 md:mb-4 quill-content" dangerouslySetInnerHTML={{ __html: service.desc }}></div>
                         <p className="text-base sm:text-lg font-heading font-semibold text-gradient-gold mb-4 md:mb-6">{service.price}</p>
-                        <Link to="/contact" className="btn-luxury inline-block text-sm sm:text-base">
+                        <Link to={`/contact?service=${encodeURIComponent(service.title)}`} className="btn-luxury inline-block text-sm sm:text-base">
                           Book Appointment
                         </Link>
                       </div>

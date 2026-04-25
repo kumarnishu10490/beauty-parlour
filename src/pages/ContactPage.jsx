@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
 import Navbar from "@/components/Navbar";
@@ -10,8 +11,16 @@ import { db } from "@/lib/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
 const ContactPage = () => {
+  const [searchParams] = useSearchParams();
   const [form, setForm] = useState({ name: "", phone: "", interest: "", date: "", time: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const service = searchParams.get("service");
+    if (service) {
+      setForm(prev => ({ ...prev, interest: decodeURIComponent(service) }));
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
