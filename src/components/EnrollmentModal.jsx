@@ -68,29 +68,29 @@ Please guide me with the next steps! 🙏`;
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative w-full max-w-md glass-card rounded-[2.5rem] p-8 shadow-2xl overflow-hidden"
+            className="relative w-full max-w-[95%] sm:max-w-md glass-card rounded-[1.5rem] sm:rounded-[2.5rem] p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
           >
             {/* Background Glow */}
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 rounded-full blur-3xl" />
             
             <button 
               onClick={onClose}
-              className="absolute top-6 right-6 p-2 rounded-full hover:bg-muted transition-colors"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full hover:bg-muted transition-colors z-10"
             >
               <X className="w-5 h-5 text-muted-foreground" />
             </button>
 
-            <div className="mb-8">
-              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
-                <Sparkles className="w-6 h-6 text-primary" />
+            <div className="mb-6 sm:mb-8">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-3 sm:mb-4">
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
               </div>
-              <h2 className="text-2xl font-heading font-bold text-foreground">Course Enrollment</h2>
-              <p className="text-muted-foreground text-sm mt-1">Enroll in <span className="text-primary font-semibold">{courseTitle}</span></p>
+              <h2 className="text-xl sm:text-2xl font-heading font-bold text-foreground">Course Enrollment</h2>
+              <p className="text-muted-foreground text-xs sm:text-sm mt-1">Enroll in <span className="text-primary font-semibold">{courseTitle}</span></p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">Your Full Name</label>
+                <label className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">Your Full Name</label>
                 <div className="relative">
                   <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
                   <input
@@ -99,13 +99,13 @@ Please guide me with the next steps! 🙏`;
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Enter your name"
-                    className="w-full pl-12 pr-4 py-4 rounded-2xl bg-background border border-border focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+                    className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl sm:rounded-2xl bg-background border border-border focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm sm:text-base"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">Your Address</label>
+                <label className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-muted-foreground ml-1">Your Address / City</label>
                 <div className="relative">
                   <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
                   <input
@@ -114,7 +114,7 @@ Please guide me with the next steps! 🙏`;
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     placeholder="Enter your city/address"
-                    className="w-full pl-12 pr-4 py-4 rounded-2xl bg-background border border-border focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+                    className="w-full pl-12 pr-4 py-3 sm:py-4 rounded-xl sm:rounded-2xl bg-background border border-border focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-sm sm:text-base"
                   />
                 </div>
               </div>
@@ -123,14 +123,14 @@ Please guide me with the next steps! 🙏`;
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-full btn-luxury py-4 flex items-center justify-center gap-2 group"
+                className="w-full btn-luxury py-3.5 sm:py-4 flex items-center justify-center gap-2 group text-sm sm:text-base"
               >
                 Send to WhatsApp
                 <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </motion.button>
             </form>
 
-            <p className="text-[10px] text-center text-muted-foreground mt-6 uppercase tracking-widest">
+            <p className="text-[9px] sm:text-[10px] text-center text-muted-foreground mt-5 sm:mt-6 uppercase tracking-widest">
               By enrolling, you agree to our training terms
             </p>
           </motion.div>
