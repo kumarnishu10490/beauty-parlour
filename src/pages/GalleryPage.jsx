@@ -4,7 +4,6 @@ import PageTransition from "@/components/PageTransition";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnimatedSection from "@/components/AnimatedSection";
-import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import bridalImg from "@/assets/bridal-makeup.jpg";
@@ -75,37 +74,6 @@ const GalleryPage = () => {
                 Explore our students' beautiful work and transformations.
               </p>
             </AnimatedSection>
-          </div>
-        </section>
-
-        {/* Before-After Transformations */}
-        <section className="section-padding bg-gradient-luxury">
-          <div className="max-w-7xl mx-auto">
-            <AnimatedSection className="text-center mb-12">
-              <span className="text-sm font-medium text-primary tracking-widest uppercase">Transformations</span>
-              <h2 className="heading-section mt-3">
-                Before & <span className="text-gradient-gold">After</span>
-              </h2>
-              <p className="text-muted-foreground mt-3">Drag the slider to see the stunning transformations</p>
-            </AnimatedSection>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              <AnimatedSection delay={0.1}>
-                <BeforeAfterSlider
-                  beforeImage={facialImg}
-                  afterImage={bridalImg}
-                  beforeLabel="Natural"
-                  afterLabel="Bridal Glam" />
-                
-              </AnimatedSection>
-              <AnimatedSection delay={0.2}>
-                <BeforeAfterSlider
-                  beforeImage={hairSmoothImg}
-                  afterImage={hairImg}
-                  beforeLabel="Before Styling"
-                  afterLabel="After Styling" />
-                
-              </AnimatedSection>
-            </div>
           </div>
         </section>
 
