@@ -36,8 +36,8 @@ export default function AdminContact() {
   };
 
   return (
-    <div className="p-8">
-      <h2 className="text-2xl font-bold mb-6">Contact Messages</h2>
+    <div className="p-4 md:p-8">
+      <h2 className="text-xl md:text-2xl font-bold mb-6">Contact Messages</h2>
 
       {loading ? (
         <p>Loading messages...</p>
@@ -45,45 +45,47 @@ export default function AdminContact() {
         <p className="text-gray-500">No messages found.</p>
       ) : (
         <div className="bg-white rounded-xl shadow overflow-hidden">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-gray-50 border-b">
-                <th className="p-4 font-medium text-gray-600">Date</th>
-                <th className="p-4 font-medium text-gray-600">Name</th>
-                <th className="p-4 font-medium text-gray-600">Phone</th>
-                <th className="p-4 font-medium text-gray-600">Interest</th>
-                <th className="p-4 font-medium text-gray-600">Preferred Time</th>
-                <th className="p-4 font-medium text-gray-600">Message</th>
-                <th className="p-4 font-medium text-gray-600">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {messages.map((msg) => (
-                <tr key={msg.id} className="border-b last:border-0 hover:bg-gray-50">
-                  <td className="p-4 text-sm text-gray-500">
-                    {msg.createdAt ? new Date(msg.createdAt).toLocaleDateString() : 'N/A'}
-                  </td>
-                  <td className="p-4 font-medium">{msg.name}</td>
-                  <td className="p-4 text-sm">{msg.phone}</td>
-                  <td className="p-4 text-sm text-primary">{msg.interest || 'N/A'}</td>
-                  <td className="p-4 text-sm">
-                    {msg.date ? `${msg.date} at ${msg.time}` : 'Not specified'}
-                  </td>
-                  <td className="p-4 text-sm max-w-xs truncate" title={msg.message}>
-                    {msg.message || 'No message'}
-                  </td>
-                  <td className="p-4">
-                    <button 
-                      onClick={() => handleDelete(msg.id)}
-                      className="text-red-500 hover:text-red-700 text-sm font-medium"
-                    >
-                      Delete
-                    </button>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse whitespace-nowrap">
+              <thead>
+                <tr className="bg-gray-50 border-b">
+                  <th className="p-4 font-medium text-gray-600">Date</th>
+                  <th className="p-4 font-medium text-gray-600">Name</th>
+                  <th className="p-4 font-medium text-gray-600">Phone</th>
+                  <th className="p-4 font-medium text-gray-600">Interest</th>
+                  <th className="p-4 font-medium text-gray-600">Preferred Time</th>
+                  <th className="p-4 font-medium text-gray-600">Message</th>
+                  <th className="p-4 font-medium text-gray-600">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {messages.map((msg) => (
+                  <tr key={msg.id} className="border-b last:border-0 hover:bg-gray-50">
+                    <td className="p-4 text-sm text-gray-500">
+                      {msg.createdAt ? new Date(msg.createdAt).toLocaleDateString() : 'N/A'}
+                    </td>
+                    <td className="p-4 font-medium">{msg.name}</td>
+                    <td className="p-4 text-sm">{msg.phone}</td>
+                    <td className="p-4 text-sm text-primary">{msg.interest || 'N/A'}</td>
+                    <td className="p-4 text-sm">
+                      {msg.date ? `${msg.date} at ${msg.time}` : 'Not specified'}
+                    </td>
+                    <td className="p-4 text-sm max-w-xs truncate" title={msg.message}>
+                      {msg.message || 'No message'}
+                    </td>
+                    <td className="p-4">
+                      <button 
+                        onClick={() => handleDelete(msg.id)}
+                        className="text-red-500 hover:text-red-700 text-sm font-medium"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>
