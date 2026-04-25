@@ -4,10 +4,11 @@ import AnimatedSection from "../AnimatedSection";
 import { Users, GraduationCap, Calendar, Award } from "lucide-react";
 
 const stats = [
-{ icon: Users, value: 5000, suffix: "+", label: "Happy Clients", color: "text-primary" },
-{ icon: GraduationCap, value: 200, suffix: "+", label: "Students Trained", color: "text-gold" },
-{ icon: Calendar, value: 10, suffix: "+", label: "Years Experience", color: "text-rose-gold" },
-{ icon: Award, value: 15, suffix: "+", label: "Certified Courses", color: "text-accent" }];
+  { icon: Users, value: 1000, suffix: "+", label: "Happy Clients", color: "text-primary" },
+  { icon: GraduationCap, value: 200, suffix: "+", label: "Students Trained", color: "text-gold" },
+  { icon: Calendar, value: 10, suffix: "+", label: "Years Experience", color: "text-rose-gold" },
+  { icon: Award, value: 15, suffix: "+", label: "Certified Courses", color: "text-accent" }
+];
 
 
 const useCountUp = (end, duration, shouldStart) => {

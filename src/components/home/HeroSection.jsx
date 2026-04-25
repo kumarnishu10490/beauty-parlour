@@ -1,8 +1,36 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import FloatingParticles from "../FloatingParticles";
 import heroImg from "@/assets/hero-salon.jpg";
+
+const StatCounter = ({ end, duration = 2000 }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (isInView) {
+      let startTime;
+      let animationFrame;
+
+      const animate = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        setCount(Math.floor(eased * end));
+        if (progress < 1) {
+          animationFrame = requestAnimationFrame(animate);
+        }
+      };
+
+      animationFrame = requestAnimationFrame(animate);
+      return () => cancelAnimationFrame(animationFrame);
+    }
+  }, [isInView, end, duration]);
+
+  return <span ref={ref}>{count}</span>;
+};
 
 const HeroSection = () => {
   const sectionRef = useRef(null);
@@ -88,12 +116,14 @@ const HeroSection = () => {
             style={{ willChange: "opacity" }}>
             
             {[
-            { num: "500+", label: "Happy Clients" },
-            { num: "200+", label: "Students Trained" },
-            { num: "10+", label: "Years Experience" }].
+            { num: 1000, label: "Happy Clients" },
+            { num: 200, label: "Students Trained" },
+            { num: 10, label: "Years Experience" }].
             map((stat) =>
             <div key={stat.label}>
-                <div className="text-2xl font-heading font-bold text-gradient-gold">{stat.num}</div>
+                <div className="text-2xl font-heading font-bold text-gradient-gold">
+                  <StatCounter end={stat.num} />+
+                </div>
                 <div className="text-xs text-muted-foreground">{stat.label}</div>
               </div>
             )}
