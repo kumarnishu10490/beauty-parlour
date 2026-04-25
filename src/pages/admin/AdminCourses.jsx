@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "@/lib/firebase";
-import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
@@ -12,6 +12,7 @@ export default function AdminCourses() {
   const [duration, setDuration] = useState("");
   const [students, setStudents] = useState("");
   const [price, setPrice] = useState("");
+  const [originalPrice, setOriginalPrice] = useState("");
   const [description, setDescription] = useState("");
   const [modules, setModules] = useState("");
   const [popular, setPopular] = useState(false);
@@ -19,11 +20,16 @@ export default function AdminCourses() {
   // FETCH DATA
   const fetchCourses = async () => {
     try {
-        const querySnapshot = await getDocs(collection(db, "courses"));
+        const q = query(collection(db, "courses"), orderBy("createdAt", "asc"));
+        const querySnapshot = await getDocs(q);
         const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setCourses(data || []);
     } catch (e) {
         console.error("Error fetching courses", e);
+        // Fallback for docs without createdAt
+        const querySnapshot = await getDocs(collection(db, "courses"));
+        const data = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setCourses(data || []);
     }
   };
 
@@ -44,15 +50,18 @@ export default function AdminCourses() {
             duration, 
             students, 
             price, 
+            originalPrice,
             description, 
             modules: modulesArray,
-            popular 
+            popular,
+            createdAt: new Date().toISOString()
         });
         fetchCourses();
         setTitle("");
         setDuration("");
         setStudents("");
         setPrice("");
+        setOriginalPrice("");
         setDescription("");
         setModules("");
         setPopular(false);
@@ -83,7 +92,8 @@ export default function AdminCourses() {
             <input className="border p-2 rounded focus:ring-2 outline-none" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Course Title (e.g. Basic Beauty)" />
             <input className="border p-2 rounded focus:ring-2 outline-none" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="Duration (e.g. 3 Months)" />
             <input className="border p-2 rounded focus:ring-2 outline-none" value={students} onChange={(e) => setStudents(e.target.value)} placeholder="Students (e.g. 50+ Enrolled)" />
-            <input className="border p-2 rounded focus:ring-2 outline-none" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Price (e.g. ₹12,000)" />
+            <input className="border p-2 rounded focus:ring-2 outline-none" value={originalPrice} onChange={(e) => setOriginalPrice(e.target.value)} placeholder="Original Price (e.g. ₹15,000)" />
+            <input className="border p-2 rounded focus:ring-2 outline-none" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Discounted Price (e.g. ₹12,000)" />
             <div className="flex items-center gap-2 px-2">
                 <input type="checkbox" id="popular" checked={popular} onChange={(e) => setPopular(e.target.checked)} className="w-4 h-4 text-primary" />
                 <label htmlFor="popular" className="text-gray-700">Mark as Popular</label>
@@ -106,7 +116,10 @@ export default function AdminCourses() {
                   <span>{item.duration}</span>
                   <span>{item.students}</span>
               </div>
-              <p className="text-gradient-gold font-bold text-lg mb-2">{item.price}</p>
+              <div className="flex items-center gap-3 mb-2">
+                  <p className="text-gradient-gold font-bold text-lg">{item.price}</p>
+                  {item.originalPrice && <p className="text-gray-400 line-through text-sm">{item.originalPrice}</p>}
+              </div>
               <div className="text-sm text-gray-600 mb-4 quill-content line-clamp-3" dangerouslySetInnerHTML={{ __html: item.description }}></div>
               
               <div className="mb-4 text-sm text-gray-500">
