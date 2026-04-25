@@ -1,29 +1,29 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import AnimatedSection from "../AnimatedSection";
-import bridalImg from "@/assets/bridal-makeup.jpg";
 import facialImg from "@/assets/facial-care.jpg";
 import partyImg from "@/assets/party-makeup.jpg";
+import bridalImg from "@/assets/bridal-makeup.jpg";
 
 const stages = [
-{
-  title: "Natural Beauty",
-  description: "Every transformation begins with understanding your unique beauty. We start with a fresh canvas.",
-  img: facialImg,
-  step: "01"
-},
-{
-  title: "Soft Enhancement",
-  description: "Subtle touches that bring out your natural glow — skincare, base, and delicate highlights.",
-  img: partyImg,
-  step: "02"
-},
-{
-  title: "Complete Transformation",
-  description: "The final masterpiece — a stunning bridal or glamour look that makes you feel like royalty.",
-  img: bridalImg,
-  step: "03"
-}];
+  {
+    title: "Natural Beauty",
+    description: "Every transformation begins with understanding your unique beauty. We start with a fresh canvas.",
+    img: facialImg,
+    step: "01"
+  },
+  {
+    title: "Soft Enhancement",
+    description: "Subtle touches that bring out your natural glow — skincare, base, and delicate highlights.",
+    img: partyImg,
+    step: "02"
+  },
+  {
+    title: "Complete Transformation",
+    description: "The final masterpiece — a stunning bridal or glamour look that makes you feel like royalty.",
+    img: bridalImg,
+    step: "03"
+  }];
 
 
 const ScrollTransformationStory = () => {
@@ -77,20 +77,20 @@ const ScrollTransformationStory = () => {
             className="h-full rounded-full"
             // Using inline style for gradient since this is a dynamic element
             {...{ style: { width: progressWidth, background: "linear-gradient(90deg, hsl(340 60% 55%), hsl(38 70% 55%))" } }} />
-          
+
         </div>
       </div>
 
-    {/* Stages */}
+      {/* Stages */}
       <div className="min-h-[400vh] relative px-6 md:px-12 lg:px-20 py-16">
         <div className="sticky top-32 max-w-7xl mx-auto">
           <div className="relative min-h-[70vh] flex items-center">
             {stages.map((stage, i) =>
-            <motion.div
-              key={stage.step}
-              style={{ opacity: opacities[i], scale: scales[i], y: ys[i], willChange: "transform, opacity" }}
-              className="absolute inset-0 flex items-center">
-              
+              <motion.div
+                key={stage.step}
+                style={{ opacity: opacities[i], scale: scales[i], y: ys[i], willChange: "transform, opacity" }}
+                className="absolute inset-0 flex items-center">
+
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
                   <div>
                     <div className="flex items-center gap-4 mb-4">
@@ -108,12 +108,12 @@ const ScrollTransformationStory = () => {
                   </div>
                   <div className="rounded-3xl overflow-hidden shadow-2xl">
                     <img
-                    src={stage.img}
-                    alt={stage.title}
-                    className="w-full h-80 md:h-96 object-cover"
-                    loading="lazy"
-                    decoding="async" />
-                  
+                      src={stage.img}
+                      alt={stage.title}
+                      className="w-full h-80 md:h-96 object-cover"
+                      loading="lazy"
+                      decoding="async" />
+
                   </div>
                 </div>
               </motion.div>
