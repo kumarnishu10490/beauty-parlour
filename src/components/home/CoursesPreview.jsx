@@ -57,7 +57,7 @@ const CoursesPreview = () => {
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
               Transform your passion into a rewarding career. Sakshi Beauty Training Centre offers 
-              hands-on practical learning with industry-recognized certifications.
+              hands-on practical learning with **MSME Government Certified** training.
             </p>
             
             <div className="relative group rounded-3xl overflow-hidden shadow-luxury">

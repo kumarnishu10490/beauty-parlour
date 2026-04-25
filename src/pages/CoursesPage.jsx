@@ -137,10 +137,9 @@ const CoursesPage = () => {
                   <Award className="w-10 h-10 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-heading text-2xl font-bold text-foreground mb-2">Certified Training</h3>
+                  <h3 className="font-heading text-2xl font-bold text-foreground mb-2">MSME Certified Training</h3>
                   <p className="text-muted-foreground">
-                    All graduates receive a recognized professional certificate upon successful completion of their course, 
-                    helping you establish credibility and launch your beauty career with confidence.
+                    Receive an MSME Government Recognized Certificate upon completion of your course and start your professional journey with trust and authority.
                   </p>
                 </div>
               </div>
