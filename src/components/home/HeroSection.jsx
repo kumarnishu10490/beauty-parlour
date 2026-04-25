@@ -68,6 +68,15 @@ const HeroSection = () => {
             ✨ Sakshi Beauty Parlour & Training Centre
           </motion.div>
 
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex items-center gap-2 mb-4 text-xs font-semibold text-gold uppercase tracking-wider">
+            <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+            MSME Registered Business 🇮🇳
+          </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}

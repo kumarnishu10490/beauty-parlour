@@ -31,9 +31,12 @@ const Footer = () => {
                 Sakshi Beauty
               </span>
             </div>
-            <p className="text-sm opacity-70 leading-relaxed">
+            <p className="text-sm opacity-70 leading-relaxed mb-4">
               Premium beauty parlour & training centre. Where beauty meets excellence.
             </p>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/20 border border-primary/30 text-xs font-medium text-gold">
+              🇮🇳 MSME Registered Business
+            </div>
           </div>
 
           <div>

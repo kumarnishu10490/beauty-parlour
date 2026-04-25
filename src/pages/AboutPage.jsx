@@ -54,10 +54,21 @@ const AboutPage = () => {
                 simple vision — to make beauty services accessible.
               </p>
 
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground mb-6">
                 Today, we proudly serve hundreds of clients and have trained many
-                students.
+                students. We are a **government-recognized MSME registered business**,
+                committed to maintaining the highest standards of beauty and education.
               </p>
+              
+              <div className="flex items-center gap-3 p-4 bg-blush/30 rounded-2xl border border-primary/20">
+                <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center text-2xl">
+                  🇮🇳
+                </div>
+                <div>
+                  <p className="font-bold text-foreground">MSME Registered</p>
+                  <p className="text-xs text-muted-foreground">Certified Beauty & Training Centre</p>
+                </div>
+              </div>
             </AnimatedSection>
           </div>
         </section>
