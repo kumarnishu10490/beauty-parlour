@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
-import { Loader2, UploadCloud } from "lucide-react";
+import { Loader2, UploadCloud, Trash2, Camera, Tag } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Gallery() {
   const [images, setImages] = useState([]);
@@ -9,7 +10,6 @@ function Gallery() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Makeup");
   const [uploading, setUploading] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   // GET images
   const fetchImages = async () => {
@@ -52,7 +52,7 @@ function Gallery() {
 
       if (data.success) {
         const downloadURL = data.data.url;
-        await addDoc(collection(db, "gallery"), { url: downloadURL, title, category });
+        await addDoc(collection(db, "gallery"), { url: downloadURL, title, category, createdAt: new Date().toISOString() });
         fetchImages();
         setFile(null);
         setTitle("");
@@ -79,70 +79,113 @@ function Gallery() {
   };
 
   return (
-    <div className="p-8">
-      <h2 className="text-2xl font-bold mb-4">Admin Gallery</h2>
+    <div className="p-6 md:p-10 font-sans max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+        <div>
+          <h2 className="text-3xl font-bold text-white tracking-tight">Gallery Manager</h2>
+          <p className="text-zinc-400 text-sm mt-1">Upload and showcase your best beauty transformations.</p>
+        </div>
+      </div>
 
-      <div className="flex flex-col md:flex-row gap-4 mb-8 bg-white p-6 rounded-xl shadow-sm border border-gray-100 items-start">
-          <div className="flex-1 w-full space-y-4">
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition relative">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col lg:flex-row gap-6 mb-12 bg-zinc-900/60 backdrop-blur-xl p-6 sm:p-8 rounded-3xl border border-zinc-800/50 shadow-2xl items-stretch"
+      >
+          <div className="flex-1 min-w-[280px]">
+            <label className="block text-xs font-medium text-zinc-400 mb-2 uppercase tracking-wider">Select Image</label>
+            <div className="border-2 border-dashed border-zinc-800 rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer hover:bg-zinc-800/30 transition-all relative group h-full min-h-[160px]">
               <input
                 type="file"
                 accept="image/*"
                 onChange={(e) => setFile(e.target.files[0])}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
               />
-              <UploadCloud className="w-8 h-8 text-gray-400 mb-2" />
-              <p className="text-sm text-gray-500">{file ? file.name : "Click or drag image to upload"}</p>
+              <UploadCloud className="w-12 h-12 text-zinc-500 mb-2 group-hover:text-rose-400 transition-colors" />
+              <p className="text-sm text-zinc-400 text-center font-medium">
+                {file ? file.name : "Drop beauty photos here"}
+              </p>
             </div>
-            {uploading && (
-              <div className="w-full bg-gray-200 rounded-full h-2.5">
-                <div className="bg-primary h-2.5 rounded-full transition-all animate-pulse w-full"></div>
-              </div>
-            )}
           </div>
           
-          <div className="flex-1 w-full space-y-4">
-            <input
-              className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-primary outline-none"
-              type="text"
-              placeholder="Title (e.g. Bridal Magic)"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)} />
-            <select 
-              className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-primary outline-none bg-white"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}>
-              <option value="Bridal">Bridal</option>
-              <option value="Hair">Hair</option>
-              <option value="Makeup">Makeup</option>
-              <option value="Mehndi">Mehndi</option>
-              <option value="Skincare">Skincare</option>
-              <option value="Studio">Studio</option>
-            </select>
+          <div className="flex-1 flex flex-col gap-5 justify-center">
+            <div>
+              <label className="block text-xs font-medium text-zinc-400 mb-1.5 uppercase tracking-wider">Photo Title</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-zinc-500 group-focus-within:text-rose-400 transition-colors">
+                  <Camera className="h-5 w-5" />
+                </div>
+                <input
+                  className="w-full bg-zinc-950/50 border border-zinc-800 text-white rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:border-rose-500 transition-all"
+                  type="text"
+                  placeholder="e.g. Bridal Glow"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)} />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-zinc-400 mb-1.5 uppercase tracking-wider">Category</label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-zinc-500 group-focus-within:text-rose-400 transition-colors">
+                  <Tag className="h-5 w-5" />
+                </div>
+                <select 
+                  className="w-full bg-zinc-950/50 border border-zinc-800 text-white rounded-xl py-3 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:border-rose-500 transition-all appearance-none"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}>
+                  <option value="Bridal">Bridal</option>
+                  <option value="Hair">Hair</option>
+                  <option value="Makeup">Makeup</option>
+                  <option value="Mehndi">Mehndi</option>
+                  <option value="Skincare">Skincare</option>
+                  <option value="Studio">Studio</option>
+                </select>
+              </div>
+            </div>
           </div>
 
-          <button 
-            disabled={uploading || !file || !title}
-            className="bg-black text-white px-8 py-3 h-[90px] rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 flex flex-col items-center justify-center gap-1" 
-            onClick={handleUpload}
-          >
-            {uploading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Upload"}
-            {uploading ? "Uploading..." : "Save"}
-          </button>
-      </div>
+          <div className="flex items-end lg:pb-0">
+            <button 
+              disabled={uploading || !file || !title}
+              className="w-full lg:w-40 bg-white text-zinc-950 h-[52px] rounded-xl font-bold hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2" 
+              onClick={handleUpload}
+            >
+              {uploading ? <Loader2 className="w-5 h-5 animate-spin" /> : <UploadCloud className="w-5 h-5" />}
+              {uploading ? "Saving..." : "Upload"}
+            </button>
+          </div>
+      </motion.div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {images.map((img) =>
-        <div key={img.id} className="relative group">
-          <img src={img.url} className="w-full h-auto rounded" alt="gallery" />
-          <button 
-            onClick={() => handleDelete(img.id)}
-            className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-          >
-            Delete
-          </button>
-        </div>
-        )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <AnimatePresence>
+          {images.map((img) => (
+            <motion.div 
+              layout
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              key={img.id} 
+              className="group relative h-64 w-full rounded-3xl overflow-hidden border border-zinc-800/50 shadow-xl"
+            >
+              <img src={img.url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={img.title} />
+              
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+              
+              <div className="absolute bottom-0 left-0 right-0 p-5 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                <p className="text-rose-400 text-[10px] font-bold uppercase tracking-widest mb-1">{img.category}</p>
+                <p className="text-white font-bold text-lg leading-tight mb-2">{img.title}</p>
+                
+                <button 
+                  onClick={() => handleDelete(img.id)}
+                  className="w-full py-2 bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-2 border border-rose-500/20"
+                >
+                  <Trash2 className="w-3.5 h-3.5" /> Delete Photo
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
     </div>);
 }
