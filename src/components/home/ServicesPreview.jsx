@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import AnimatedSection from "../AnimatedSection";
 import { Sparkles, Heart, Scissors, Flower2, Palette, Hand } from "lucide-react";
 import bridalImg from "@/assets/bridal-makeup.jpg";
+import partyImg from "@/assets/party-makeup.jpg";
 import hairImg from "@/assets/hair-styling.jpg";
 import facialImg from "@/assets/facial-care.jpg";
 import mehndiImg from "@/assets/mehndi.jpg";
@@ -10,7 +11,7 @@ import hairSmoothImg from "@/assets/hair-smoothening.jpg";
 
 const services = [
   { icon: Heart, title: "Bridal Makeup", desc: "Your dream bridal look, crafted to perfection", img: bridalImg },
-  { icon: Sparkles, title: "Party Makeup", desc: "Glamorous looks for every special occasion", img: bridalImg },
+  { icon: Sparkles, title: "Party Makeup", desc: "Glamorous looks for every special occasion", img: partyImg },
   { icon: Flower2, title: "Facial & Skin Care", desc: "Rejuvenate your skin with premium treatments", img: facialImg },
   { icon: Scissors, title: "Hair Cut & Styling", desc: "Trendy cuts and styles by expert stylists", img: hairImg },
   { icon: Palette, title: "Hair Smoothening", desc: "Silky smooth hair with professional treatments", img: hairSmoothImg },
