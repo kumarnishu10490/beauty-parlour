@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Star } from "lucide-react";
 
 const proofs = [
-const proofs = [
   { name: "Priya S.", service: "Bridal Makeup", rating: 5, time: "2 min ago", location: "Dipka" },
   { name: "Khushi R.", service: "Hair Smoothening", rating: 5, time: "5 min ago", location: "Korba" },
   { name: "Puja K.", service: "Gold Facial", rating: 5, time: "8 min ago", location: "Gevra" },
