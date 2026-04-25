@@ -5,7 +5,7 @@ import { GraduationCap, HandHeart, Award, BadgeIndianRupee, Smile } from "lucide
 const features = [
 { icon: GraduationCap, title: "Professional Trainers", desc: "Learn from certified beauty experts with years of industry experience" },
 { icon: HandHeart, title: "Hands-On Training", desc: "Practical sessions with real clients for genuine learning" },
-{ icon: Award, title: "Certified Courses", desc: "Receive recognized certificates upon course completion" },
+{ icon: Award, title: "MSME Certified Courses", desc: "Receive government-recognized MSME certificates upon course completion" },
 { icon: BadgeIndianRupee, title: "Affordable Fees", desc: "Quality education at competitive prices with EMI options" },
 { icon: Smile, title: "Friendly Environment", desc: "Supportive and encouraging atmosphere for every student" }];
 
