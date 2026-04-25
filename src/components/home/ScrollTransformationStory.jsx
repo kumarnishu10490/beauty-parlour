@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import AnimatedSection from "../AnimatedSection";
 import facialImg from "@/assets/facial-care.jpg";
 import partyImg from "@/assets/party-makeup.jpg";
@@ -24,84 +25,104 @@ const stages = [
     step: "03"
   }];
 
+
 const ScrollTransformationStory = () => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const opacity1 = useTransform(scrollYProgress, [0, 0.05, 0.30, 0.40], [1, 1, 1, 0]);
+  const opacity2 = useTransform(scrollYProgress, [0.35, 0.45, 0.60, 0.70], [0, 1, 1, 0]);
+  const opacity3 = useTransform(scrollYProgress, [0.65, 0.75, 0.90, 1.0], [0, 1, 1, 1]);
+  const opacities = [opacity1, opacity2, opacity3];
+
+  const scale1 = useTransform(scrollYProgress, [0, 0.05, 0.30, 0.40], [1, 1, 1, 0.95]);
+  const scale2 = useTransform(scrollYProgress, [0.35, 0.45, 0.60, 0.70], [0.93, 1, 1, 0.95]);
+  const scale3 = useTransform(scrollYProgress, [0.65, 0.75, 0.90, 1.0], [0.93, 1, 1, 1]);
+  const scales = [scale1, scale2, scale3];
+
+  const y1 = useTransform(scrollYProgress, [0, 0.05, 0.30, 0.40], ["0px", "0px", "0px", "-40px"]);
+  const y2 = useTransform(scrollYProgress, [0.35, 0.45, 0.60, 0.70], ["60px", "0px", "0px", "-40px"]);
+  const y3 = useTransform(scrollYProgress, [0.65, 0.75, 0.90, 1.0], ["60px", "0px", "0px", "0px"]);
+  const ys = [y1, y2, y3];
+
+  const progressWidth = useTransform(scrollYProgress, [0, 0.85], ["0%", "100%"]);
+
   return (
-    <section className="relative bg-background overflow-hidden section-padding">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        
-        {/* Header */}
-        <AnimatedSection className="text-center mb-16">
-          <span className="text-sm font-medium text-primary tracking-widest uppercase">
-            The Journey
-          </span>
-          <h2 className="heading-section mt-3">
-            A Beauty <span className="text-gradient-rose">Transformation</span> Story
-          </h2>
-          <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-            Discover the stages of a breathtaking beauty transformation, curated just for you.
-          </p>
-        </AnimatedSection>
+    <section ref={containerRef} className="relative bg-background">
+      {/* Section header */}
+      <div className="section-padding pb-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <AnimatedSection>
+            <span className="text-sm font-medium text-primary tracking-widest uppercase">
+              The Journey
+            </span>
+            <h2 className="heading-section mt-3">
+              A Beauty <span className="text-gradient-rose">Transformation</span> Story
+            </h2>
+            <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+              Scroll through the stages of a breathtaking beauty transformation
+            </p>
+          </AnimatedSection>
+        </div>
+      </div>
 
-        {/* Timeline Layout */}
-        <div className="relative space-y-20 md:space-y-32">
-          {/* Connecting line for desktop */}
-          <div className="hidden lg:block absolute left-1/2 top-10 bottom-10 w-0.5 bg-gradient-to-b from-primary/20 via-primary/50 to-primary/20 -translate-x-1/2" />
+      {/* Progress bar */}
+      <div className="sticky top-20 z-20 px-6 md:px-20">
+        <div className="max-w-3xl mx-auto h-1 bg-blush rounded-full overflow-hidden">
+          <motion.div
+            style={{ width: progressWidth }}
+            className="h-full rounded-full"
+            // Using inline style for gradient since this is a dynamic element
+            {...{ style: { width: progressWidth, background: "linear-gradient(90deg, hsl(340 60% 55%), hsl(38 70% 55%))" } }} />
 
-          {stages.map((stage, i) => (
-            <div key={stage.step} className="relative z-10">
-              <div className={`flex flex-col lg:flex-row items-center gap-10 md:gap-16 ${i % 2 !== 0 ? "lg:flex-row-reverse" : ""}`}>
-                
-                {/* Text Content */}
-                <motion.div 
-                  initial={{ opacity: 0, x: i % 2 !== 0 ? 50 : -50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6 }}
-                  className={`w-full lg:w-1/2 ${i % 2 !== 0 ? "lg:pl-12" : "lg:pr-12 text-left lg:text-right"}`}
-                >
-                  <span className="inline-block text-5xl md:text-7xl font-heading font-bold text-gradient-gold opacity-40 mb-2">
-                    {stage.step}
-                  </span>
-                  <h3 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-4">
-                    {stage.title}
-                  </h3>
-                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                    {stage.description}
-                  </p>
-                </motion.div>
+        </div>
+      </div>
 
-                {/* Center Node (Desktop) */}
-                <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-background border-4 border-primary rounded-full items-center justify-center shadow-lg z-20">
-                  <div className="w-2 h-2 bg-primary rounded-full" />
-                </div>
+      {/* Stages */}
+      <div className="min-h-[150vh] relative px-6 md:px-12 lg:px-20 py-16">
+        <div className="sticky top-32 max-w-7xl mx-auto">
+          <div className="relative min-h-[70vh] flex items-center">
+            {stages.map((stage, i) =>
+              <motion.div
+                key={stage.step}
+                style={{ opacity: opacities[i], scale: scales[i], y: ys[i], willChange: "transform, opacity" }}
+                className="absolute inset-0 flex items-center">
 
-                {/* Image */}
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.7 }}
-                  className="w-full lg:w-1/2"
-                >
-                  <div className="rounded-3xl overflow-hidden shadow-2xl relative group">
-                    <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+                  <div>
+                    <div className="flex items-center gap-4 mb-4">
+                      <span className="text-6xl font-heading font-bold text-gradient-gold opacity-30">
+                        {stage.step}
+                      </span>
+                      <div className="h-px flex-1 bg-border" />
+                    </div>
+                    <h3 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-4">
+                      {stage.title}
+                    </h3>
+                    <p className="text-lg text-muted-foreground leading-relaxed max-w-md">
+                      {stage.description}
+                    </p>
+                  </div>
+                  <div className="rounded-3xl overflow-hidden shadow-2xl">
                     <img
                       src={stage.img}
                       alt={stage.title}
-                      className="w-full h-72 md:h-96 lg:h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-80 md:h-96 object-cover"
                       loading="lazy"
-                    />
+                      decoding="async" />
+
                   </div>
-                </motion.div>
-
-              </div>
-            </div>
-          ))}
+                </div>
+              </motion.div>
+            )}
+          </div>
         </div>
-
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default ScrollTransformationStory;
