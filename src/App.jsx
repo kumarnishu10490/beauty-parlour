@@ -13,6 +13,7 @@ import ContactPage from "./pages/ContactPage";
 import NotFound from "./pages/NotFound";
 import WhatsAppButton from "./components/WhatsAppButton";
 import SocialProofPopup from "./components/SocialProofPopup";
+import QuickActionToolbar from "./components/QuickActionToolbar";
 import AISkinAnalysisPage from "./pages/AISkinAnalysisPage";
 import AIHairstylePage from "./pages/AIHairstylePage";
 import AIBeautyConsultantPage from "./pages/AIBeautyConsultantPage";
@@ -62,6 +63,7 @@ const App = () =>
         </AnimatePresence>
         <WhatsAppButton />
         <SocialProofPopup />
+        <QuickActionToolbar />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>;
