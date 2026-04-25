@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import AnimatedSection from "../AnimatedSection";
 import { Clock, Users, Award, ArrowRight } from "lucide-react";
 import trainingImg from "@/assets/training-class.jpg";
+import { useState } from "react";
+import EnrollmentModal from "../EnrollmentModal";
 
 const courses = [
 {
@@ -35,6 +37,9 @@ const courses = [
 
 
 const CoursesPreview = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState("");
+
   return (
     <section className="section-padding bg-gradient-hero relative overflow-hidden">
       {/* Decorative Background Elements */}
@@ -71,11 +76,12 @@ const CoursesPreview = () => {
           <div className="space-y-6">
             {courses.map((course, i) =>
             <AnimatedSection key={course.title} delay={0.2 + (i * 0.2)} direction="right">
-                <a 
-                  href={`https://wa.me/919304825053?text=${encodeURIComponent(`Hi! I'm interested in enrolling for the "${course.title}". Please provide more details.`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
+                <button 
+                  onClick={() => {
+                    setSelectedCourse(course.title);
+                    setIsModalOpen(true);
+                  }}
+                  className="block w-full text-left"
                 >
                   <motion.div
                   whileHover={{ x: 12, y: -4 }}
@@ -129,9 +135,15 @@ const CoursesPreview = () => {
                     {/* Shine effect on hover */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                   </motion.div>
-                </a>
+                </button>
               </AnimatedSection>
             )}
+
+            <EnrollmentModal 
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              courseTitle={selectedCourse}
+            />
             
             <AnimatedSection delay={0.8} direction="right" className="pt-4">
               <Link to="/courses" className="btn-luxury w-full py-4 text-center group">

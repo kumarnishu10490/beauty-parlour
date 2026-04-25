@@ -9,12 +9,13 @@ import { Clock, Users, Award, CheckCircle2, Loader2 } from "lucide-react";
 import trainingImg from "@/assets/training-class.jpg";
 import { db } from "@/lib/firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
-
-
+import EnrollmentModal from "@/components/EnrollmentModal";
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState("");
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -108,19 +109,26 @@ const CoursesPage = () => {
                           </div>
                         )}
                       </div>
-                      <a 
-                        href={`https://wa.me/919304825053?text=${encodeURIComponent(`Hi! I'm interested in enrolling for the "${course.title}". Please provide more details.`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-luxury text-center block"
+                      <button 
+                        onClick={() => {
+                          setSelectedCourse(course.title);
+                          setIsModalOpen(true);
+                        }}
+                        className="btn-luxury text-center block w-full"
                       >
                         Enroll Now
-                      </a>
+                      </button>
                     </motion.div>
                   </AnimatedSection>
                 )
               )}
             </div>
+
+            <EnrollmentModal 
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              courseTitle={selectedCourse}
+            />
 
             {/* Certificate info */}
             <AnimatedSection className="mt-16">
