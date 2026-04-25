@@ -62,10 +62,21 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blush/50 text-primary text-sm font-medium mb-6"
+            className="relative inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 shadow-elegant mb-6 overflow-hidden group"
             style={{ willChange: "transform, opacity" }}>
+            {/* Animated Shine Effect */}
+            <motion.div
+              animate={{ x: ["-100%", "200%"] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent w-1/2 -skew-x-12" />
             
-            ✨ Sakshi Beauty Parlour & Training Centre
+            <motion.span
+              animate={{ rotate: [0, 15, -15, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="text-primary drop-shadow-glow">✨</motion.span>
+            <span className="relative z-10 text-sm font-bold tracking-wider text-primary">
+              Sakshi Beauty <span className="text-gold">Parlour</span> & Training Centre
+            </span>
           </motion.div>
 
           <motion.div
