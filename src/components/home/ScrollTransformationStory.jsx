@@ -70,7 +70,7 @@ const ScrollTransformationStory = () => {
       </div>
 
       {/* Progress bar */}
-      <div className="sticky top-20 z-20 px-6 md:px-20">
+      <div className="hidden md:block sticky top-20 z-20 px-6 md:px-20">
         <div className="max-w-3xl mx-auto h-1 bg-blush rounded-full overflow-hidden">
           <motion.div
             style={{ width: progressWidth }}

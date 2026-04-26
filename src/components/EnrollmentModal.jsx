@@ -67,66 +67,70 @@ Please guide me with the next steps! 🙏`;
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[200] flex items-start sm:items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div 
+          className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center overflow-hidden"
+          onClick={onClose}
+        >
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="fixed inset-0 bg-zinc-950/80 backdrop-blur-md"
+            className="fixed inset-0 bg-zinc-950/40 backdrop-blur-sm z-0"
           />
           
           <motion.div
-            initial={{ scale: 0.9, opacity: 0, y: 40 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 40 }}
-            className="relative w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-[2rem] sm:rounded-[2.5rem] p-7 sm:p-10 shadow-2xl overflow-hidden mt-10 sm:mt-0 mb-10 sm:mb-0"
+            onClick={(e) => e.stopPropagation()}
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="relative z-10 w-full sm:max-w-lg bg-white rounded-t-[2.5rem] sm:rounded-[2rem] p-8 sm:p-10 shadow-luxury max-h-[90vh] overflow-y-auto"
           >
-            {/* Background Glow */}
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-rose-500/10 rounded-full blur-3xl" />
+            {/* Mobile Handle */}
+            <div className="w-12 h-1.5 bg-zinc-200 rounded-full mx-auto mb-6 sm:hidden" />
             
             <button 
               onClick={onClose}
-              className="absolute top-6 right-6 p-2 rounded-full hover:bg-zinc-800 transition-colors z-10"
+              className="absolute top-6 right-6 p-2 rounded-full hover:bg-primary/5 transition-colors z-20"
             >
-              <X className="w-5 h-5 text-zinc-500" />
+              <X className="w-6 h-6 text-muted-foreground" />
             </button>
 
             <div className="mb-8">
-              <div className="w-12 h-12 rounded-2xl bg-rose-500/10 flex items-center justify-center mb-4 border border-rose-500/20">
-                <Sparkles className="w-6 h-6 text-rose-500" />
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 border border-primary/20">
+                <Sparkles className="w-6 h-6 text-primary" />
               </div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight">Join Our Academy</h2>
-              <p className="text-zinc-400 text-sm mt-1">Enrollment for <span className="text-rose-400 font-bold">{courseTitle}</span></p>
+              <h2 className="text-3xl font-bold text-foreground leading-tight font-heading">Join Our Academy</h2>
+              <p className="text-muted-foreground text-sm mt-1">Enrollment for <span className="text-primary font-bold">{courseTitle}</span></p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 ml-1">Student Name</label>
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-1">Student Name</label>
                 <div className="relative">
-                  <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-rose-500" />
+                  <User className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
                   <input
                     required
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="Enter full name"
-                    className="w-full pl-12 pr-6 py-4 rounded-2xl bg-zinc-950 border border-zinc-800 focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 outline-none transition-all text-white placeholder:text-zinc-700"
+                    className="w-full pl-12 pr-6 py-4 rounded-2xl bg-muted/30 border border-primary/10 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-foreground placeholder:text-muted-foreground/50"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 ml-1">Current Address</label>
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-1">Current Address</label>
                 <div className="relative">
-                  <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-rose-500" />
+                  <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
                   <input
                     required
                     type="text"
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     placeholder="City / Locality"
-                    className="w-full pl-12 pr-6 py-4 rounded-2xl bg-zinc-950 border border-zinc-800 focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 outline-none transition-all text-white placeholder:text-zinc-700"
+                    className="w-full pl-12 pr-6 py-4 rounded-2xl bg-muted/30 border border-primary/10 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-foreground placeholder:text-muted-foreground/50"
                   />
                 </div>
               </div>
@@ -135,14 +139,14 @@ Please guide me with the next steps! 🙏`;
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-full bg-gradient-to-r from-rose-500 to-purple-500 hover:from-rose-400 hover:to-purple-400 text-white py-4 rounded-2xl flex items-center justify-center gap-3 group text-sm font-black uppercase tracking-widest shadow-xl shadow-rose-500/20"
+                className="btn-luxury w-full flex items-center justify-center gap-3 group py-4 text-lg"
               >
                 Send Request
-                <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </motion.button>
             </form>
 
-            <p className="text-[10px] text-center text-zinc-500 mt-8 uppercase tracking-[0.15em] font-medium">
+            <p className="text-xs text-center text-muted-foreground mt-6 uppercase tracking-[0.15em] font-medium">
               We will contact you on WhatsApp with batch timing
             </p>
           </motion.div>

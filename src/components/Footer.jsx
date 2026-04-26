@@ -12,11 +12,9 @@ const Footer = () => {
     facebook: ""
   });
 
+  // Removed redundant local server fetch as we use Firebase for storage and management
   useEffect(() => {
-    fetch("http://localhost:5000/api/contact").
-    then((res) => res.json()).
-    then((data) => {if (data) setContact(data);}).
-    catch(() => {});
+    // Contact info is maintained in state with fallback defaults
   }, []);
 
 

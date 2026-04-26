@@ -92,7 +92,7 @@ function Gallery() {
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col lg:flex-row gap-6 mb-12 bg-zinc-900/60 backdrop-blur-xl p-6 sm:p-8 rounded-3xl border border-zinc-800/50 shadow-2xl items-stretch"
       >
-          <div className="flex-1 min-w-[280px]">
+          <div className="flex-1 min-w-0 w-full lg:w-auto">
             <label className="block text-xs font-medium text-zinc-400 mb-2 uppercase tracking-wider">Select Image</label>
             <div className="border-2 border-dashed border-zinc-800 rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer hover:bg-zinc-800/30 transition-all relative group h-full min-h-[160px]">
               <input

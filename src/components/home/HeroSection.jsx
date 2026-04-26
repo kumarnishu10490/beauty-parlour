@@ -137,7 +137,7 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
-            className="flex gap-8 mt-12"
+            className="flex flex-wrap gap-4 sm:gap-8 mt-12"
             style={{ willChange: "opacity" }}>
             
             {[

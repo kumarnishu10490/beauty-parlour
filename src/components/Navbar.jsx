@@ -38,7 +38,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-1.5 sm:gap-2 group">
           <img src="/logo.png" alt="Sakshi Beauty Logo" className="w-8 h-8 sm:w-10 sm:h-10 object-contain" />
-          <span className="font-heading text-lg sm:text-xl font-bold text-foreground">
+          <span className="font-heading text-lg sm:text-xl font-bold text-foreground whitespace-nowrap">
             Sakshi <span className="text-gradient-gold">Beauty</span>
           </span>
         </Link>

@@ -27,7 +27,7 @@ export default function AdminLayout() {
   const closeMenu = () => setIsMobileMenuOpen(false);
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex flex-col md:flex-row font-sans relative overflow-hidden md:overflow-visible">
+    <div className="min-h-screen bg-zinc-950 flex flex-col md:flex-row font-sans relative overflow-x-hidden md:overflow-visible">
       
       {/* Mobile Top Bar */}
       <div className="md:hidden bg-zinc-900/80 backdrop-blur-md border-b border-zinc-800 text-white p-4 flex justify-between items-center shadow-md z-30 relative">
